@@ -180,6 +180,7 @@ A.orderEdit=async()=>{const o=await q(sb.from('orders').select('*').eq('id',S.or
  sheet('Ubah order',[{k:'order_no',l:'No. order',v:o.order_no,req:1},{k:'buyer',l:'Nama buyer',v:o.buyer,req:1},{k:'order_date',l:'Tanggal',t:'date',v:o.order_date,req:1},{k:'notes',l:'Catatan',t:'area',v:o.notes}],
   v=>upd('orders',o.id,v),async()=>{await del('orders',o.id);log('hapus','order',o.id,o.order_no);S.page='poDetail';S.tab='order';S.po=o.po_id})};
 A.itemForm=async po=>{const pr=await q(sb.from('products'
+
 /* ---------- pengeluaran ---------- */
 const CT=[['produksi','Produksi'],['packing','Packing'],['freebies','Freebies'],['sample','Sample'],['ongkir','Ongkir'],['lain','Lain-lain']];
 const expRow=e=>`<div class="item tap" onclick="A.expForm('${e.id}')"><span>${esc(e.item_name)} ×${e.qty}<br><span class="mut">${e.spent_at} · ${e.cost_type}${e.vendor_name?' · '+esc(e.vendor_name):''}${e.is_stock_purchase?' · stok':''}</span></span><span>${rp(e.total)}</span></div>`;
