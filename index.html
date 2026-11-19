@@ -179,7 +179,15 @@ PAGES.order=async()=>{
 A.orderEdit=async()=>{const o=await q(sb.from('orders').select('*').eq('id',S.order).single());
  sheet('Ubah order',[{k:'order_no',l:'No. order',v:o.order_no,req:1},{k:'buyer',l:'Nama buyer',v:o.buyer,req:1},{k:'order_date',l:'Tanggal',t:'date',v:o.order_date,req:1},{k:'notes',l:'Catatan',t:'area',v:o.notes}],
   v=>upd('orders',o.id,v),async()=>{await del('orders',o.id);log('hapus','order',o.id,o.order_no);S.page='poDetail';S.tab='order';S.po=o.po_id})};
-A.itemForm=async po=>{const pr=await q(sb.from('products'
+A.A.itemForm=async po=>{const pr=await q(sb.from('products').select('*').eq('po_id',po));
+ if(!pr.length)return toast('Tambahkan produk dulu di tab Produk');
+ sheet('Tambah item',[{k:'pid',l:'Produk',t:'select',o:pr.map(p=>[p.id,`${p.name} (${rp(p.sell_price)})`])},{k:'qty',l:'Jumlah',t:'number',v:1,req:1},{k:'price',l:'Harga jual (kosongkan = harga produk)',t:'number'}],
+  v=>{const p=pr.find(x=>x.id===v.pid);return ins('order_items',{order_id:S.order,product_id:p.id,product_name:p.name,qty:v.qty,sell_price:v.price??p.sell_price,cost_price:p.cost_price})})};
+A.itemEdit=async id=>{const i=await q(sb.from('order_items').select('*').eq('id',id).single());
+ sheet('Ubah item: '+i.product_name,[{k:'qty',l:'Jumlah',t:'number',v:i.qty,req:1},{k:'sell_price',l:'Harga jual',t:'number',v:i.sell_price,z:1}],v=>upd('order_items',id,v),()=>del('order_items',id))};
+const payFields=p=>[{k:'amount',l:'Jumlah',t:'number',v:p?.amount,req:1},{k:'paid_at',l:'Tanggal',t:'date',v:p?.paid_at||today(),req:1},{k:'kind',l:'Jenis',t:'select',o:[['buyer','Pembayaran buyer'],['packing_shopee','Packing/resi Shopee Split Bill']],v:p?.kind||'buyer'},{k:'method',l:'Metode (transfer, tunai, dll)',v:p?.method},{k:'notes',l:'Catatan',t:'area',v:p?.notes}];
+A.payForm=rem=>{const f=payFields();f[0].v=rem||'';sheet('Catat pembayaran',f,v=>ins('payments',{...v,order_id:S.order,matched:true}))};
+A.payEdit=async id=>{const p=await q(sb.from('payments').select('*').eq('id',id).single());sheet('Ubah pembayaran',payFields(p),v=>upd('payments',id,v),()=>del('payments',id))};
 
 /* ---------- pengeluaran ---------- */
 const CT=[['produksi','Produksi'],['packing','Packing'],['freebies','Freebies'],['sample','Sample'],['ongkir','Ongkir'],['lain','Lain-lain']];
