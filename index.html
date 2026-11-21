@@ -45,6 +45,7 @@ label.ck{display:flex;gap:8px;align-items:center;color:var(--ink)}label.ck input
 <nav id="nav" style="display:none"></nav>
 <div id="toast"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+ <script>window.onerror=function(m,s,l,c){document.body.insertAdjacentHTML('afterbegin','<pre style="background:#fff;color:#c00;padding:10px;white-space:pre-wrap;position:relative;z-index:99">ERROR: '+m+' (baris '+l+':'+c+')</pre>')}</script>
 <script>
 const CFG='cs_cfg',$=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
