@@ -1,52 +1,58 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Customstuff Recap</title>
-<meta name="theme-color" content="#f9a8c9">
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" href="IMG_20261119_141722_069.jpg">
+<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f4afd2"><title>Customstuff Recap</title>
+<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="IMG_20261119_141722_069.jpg">
 <script>
-window.onerror=function(m,s,l,c){document.body.insertAdjacentHTML('afterbegin','<pre style="background:#fff;color:#c00;padding:10px;white-space:pre-wrap;position:relative;z-index:99">ERROR: '+m+' ('+s+' baris '+l+':'+c+')</pre>')};
+window.onerror=function(m,s,l,c){document.body.insertAdjacentHTML('afterbegin','<pre style="background:#fff;color:#c00;padding:10px;white-space:pre-wrap;position:relative;z-index:99">ERROR: '+m+' ('+s+' baris '+l+')</pre>')};
 window.addEventListener('unhandledrejection',function(e){document.body.insertAdjacentHTML('afterbegin','<pre style="background:#fff;color:#c00;padding:10px;white-space:pre-wrap;position:relative;z-index:99">ERROR: '+(e.reason&&e.reason.message||e.reason)+'</pre>')});
 </script>
 <style>
-:root{--bg:#fff7fa;--card:rgba(255,255,255,.9);--solid:#fff;--ink:#2a1f25;--mut:#8a7580;--pri:#e0508a;--soft:#ffd6e7;--line:#f0dbe4;--ok:#2e9d6a;--warn:#d9822b;--bad:#d64545}
-@media(prefers-color-scheme:dark){:root{--bg:#1c1519;--card:#2a2026;--solid:#2a2026;--ink:#f6e9ef;--mut:#b49aa6;--soft:#4a2a3a;--line:#3d2d36}}
-*{box-sizing:border-box}html,body{margin:0}
+:root{--pink:#f3afd2;--pinkdeep:#d7679e;--pinksoft:#fff0f7;--blue:#e1f1fc;--green:#e5f4e1;--yellow:#fff4cf;--lav:#eee5fa;--peach:#ffeadc;--ink:#51435b;--muted:#7f6f89;--line:#eadce8;--bg:#fffbfd}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,sans-serif}
 body::before{content:"";position:fixed;inset:0;z-index:-1;background:var(--bg) url(IMG_20261119_142508_228.jpg) center top/cover no-repeat}
-@media(prefers-color-scheme:dark){body::before{background:var(--bg)}}
-body{font:15px/1.4 system-ui,sans-serif;background:var(--bg);color:var(--ink);padding:env(safe-area-inset-top) 0 calc(70px + env(safe-area-inset-bottom))}
-#main{padding:14px;max-width:640px;margin:0 auto}
-h1{font-size:20px;margin:4px 0 10px}h2{font-size:16px;margin:16px 0 8px}h3{margin:0 0 10px}
-.mut{color:var(--mut);font-size:13px}.err{color:var(--bad)}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:10px}
-.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.sp{justify-content:space-between}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.met{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px}
-.met b{display:block;font-size:17px}.pos{color:var(--ok)}.neg{color:var(--bad)}
-.btn{background:var(--pri);color:#fff;border:0;border-radius:12px;padding:10px 14px;font:inherit;font-weight:600}
-.btn.ghost{background:var(--soft);color:var(--ink)}.btn.dng{background:var(--bad)}.btn.sm{padding:6px 10px;font-size:13px}
-.item{display:flex;justify-content:space-between;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}
-.item:last-child{border:0}.tap{cursor:pointer}
-.chip{display:inline-block;border-radius:99px;padding:2px 9px;font-size:12px;background:var(--soft)}
-.chip.lunas,.chip.selesai{background:#cdeedd;color:#14573a}.chip.sebagian,.chip.berjalan{background:#ffe5c2;color:#7a4510}
-.tabs{display:flex;gap:6px;overflow-x:auto;margin:10px 0}.tabs button{flex:none}
-nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
-nav button{flex:1;border:0;background:none;color:var(--mut);padding:10px 2px;font:inherit;font-size:12px}
-nav button.on{color:var(--pri);font-weight:700}
-.ov{position:fixed;inset:0;background:#0007;display:flex;align-items:flex-end;z-index:9}
-.sh{background:var(--solid);width:100%;max-height:88vh;overflow:auto;border-radius:18px 18px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom))}
-label{display:block;font-size:13px;color:var(--mut);margin-bottom:10px}
-input,select,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit;margin-top:4px}
-label.ck{display:flex;gap:8px;align-items:center;color:var(--ink)}label.ck input{width:auto;margin:0}
-#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:84px;background:#222;color:#fff;padding:8px 14px;border-radius:99px;font-size:13px;z-index:20;display:none;max-width:90%}
-</style>
-</head>
-<body>
-<div id="main"><p style="padding:14px">Memuat aplikasi…</p></div>
-<nav id="nav" style="display:none"></nav>
+button,input,select,textarea{font:inherit}button{cursor:pointer;border:0;color:inherit}
+.app{min-height:100vh;padding-bottom:88px}
+.header{position:sticky;top:0;z-index:10;background:#fffdfde8;backdrop-filter:blur(10px);padding:14px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line)}
+.menuBtn{width:44px;height:44px;border-radius:15px;background:var(--pinksoft);color:var(--pinkdeep);font-size:22px}
+.brand{font:700 22px Georgia,serif;color:var(--pinkdeep);line-height:1.05}.brand small{display:block;font:600 11px system-ui;color:#8d6c86;letter-spacing:1.3px;margin-top:4px}
+.right{margin-left:auto;display:flex;gap:8px}.circle{width:40px;height:40px;background:white;border:1px solid var(--line);border-radius:14px;color:#b96897;font-size:18px}
+.main{max-width:760px;margin:auto;padding:16px}
+.welcome{background:linear-gradient(120deg,#ffe7f3,#f6f0ff);border:1px solid #f1cce1;border-radius:22px;padding:18px;position:relative;margin-bottom:16px}.welcome h2{font-size:20px;margin:0 0 6px}.welcome p{margin:0;color:#7f6c86}
+.bow{position:absolute;right:18px;top:18px;width:30px;height:22px}.bow:before,.bow:after{content:'';position:absolute;width:13px;height:9px;border:2px solid #df7aab;border-radius:9px 9px 2px 9px}.bow:before{left:0;transform:rotate(20deg)}.bow:after{right:0;transform:rotate(-20deg)}
+.sect{display:flex;align-items:center;justify-content:space-between;margin:18px 0 10px}.sect h3{margin:0;font-size:17px}
+.btn{background:var(--pinkdeep);color:#fff;padding:11px 14px;border-radius:14px;font-weight:700;box-shadow:0 3px 0 #c75b90}.btn.light{background:white;color:#a64a7d;border:1px solid #efc9df;box-shadow:none}.btn.soft{background:var(--pinksoft);color:#a64a7d;box-shadow:none}.btn.sm{font-size:13px;padding:8px 11px}
+.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.quick button{background:white;border:1px solid var(--line);border-radius:16px;padding:12px 8px;color:#a64a7d;font-weight:700}.quick .icon{display:block;font-size:21px;color:#cb679b;margin-bottom:5px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.stat{padding:15px;border:1px solid var(--line);border-radius:20px;background:white;min-height:96px;box-shadow:0 2px 6px #f0e8ef}.stat .label{font-size:13px;color:#6f6279}.stat strong{display:block;font-size:20px;margin-top:8px}.stat .mark{float:right;color:#c66a9d;font-size:20px}
+.pink{background:#fde7f3}.blue{background:#e2f2fc}.green{background:#e5f4e2}.yellow{background:#fff4d2}.lav{background:#eee5fa}.peach{background:#ffeadc}
+.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:15px;margin:10px 0}
+.row{display:flex;align-items:center;gap:11px;padding:12px;border:1px solid var(--line);border-radius:16px;background:#fff;margin:8px 0;cursor:pointer}
+.iconbox{width:38px;height:38px;display:grid;place-items:center;background:var(--pinksoft);border:1px solid #f0d6e6;border-radius:12px;color:#b04f86;font-weight:700;font-size:19px;flex-shrink:0}
+.desc{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.5}.tail{margin-left:auto;color:var(--muted);text-align:right}
+.status{display:inline-block;border-radius:30px;padding:5px 10px;font-size:12px;font-weight:700;background:var(--pinksoft);color:#a64a7d}.status.produksi,.status.dp{background:var(--yellow);color:#7a621d}.status.packing{background:var(--blue);color:#3d6f8b}.status.pengiriman{background:var(--lav);color:#6f5392}.status.selesai,.status.lunas{background:var(--green);color:#42773f}
+.folder{border:1px solid var(--line);border-radius:17px;padding:13px;background:white;display:flex;align-items:center;gap:10px;margin:8px 0}.folder .foldermark{color:#bf6394;font-size:20px}.folder button{margin-left:auto}
+.pagehead{display:flex;align-items:center;gap:9px;margin:3px 0 15px}.pagehead h2{font-size:23px;margin:0}.back{background:var(--pinksoft);color:#a64a7d;border-radius:12px;padding:9px}
+.field{margin:12px 0}.field label{display:block;font-size:13px;color:#6f6279;margin-bottom:5px}.field input,.field select,.field textarea{width:100%;border:1px solid #ead8e8;background:white;border-radius:13px;padding:12px;color:var(--ink)}.field textarea{min-height:75px}
+.actions{display:flex;gap:8px;margin-top:14px}.actions button{flex:1}
+.pill{background:var(--pinksoft);color:#a64a7d;border-radius:50px;padding:6px 10px;font-size:12px;border:0}.pill.on{background:var(--pinkdeep);color:#fff}
+.tabs{display:flex;gap:6px;overflow-x:auto;margin:14px 0}.tabs button{flex:none;padding:8px 14px;font-size:13px}
+.empty{text-align:center;padding:24px;color:var(--muted)}.err{color:#c0392b}
+.bottom{position:fixed;bottom:0;left:0;right:0;z-index:20;background:#fffdfd;border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:8px 3px calc(8px + env(safe-area-inset-bottom))}
+.bottom button{flex:1;background:none;color:#7f6f89;font-size:11px;padding:5px}.bottom .navicon{display:block;font-size:20px;margin-bottom:3px;color:#bc6295}.bottom button.active{color:#b8407f;font-weight:800}
+.shade{position:fixed;inset:0;z-index:40;background:#3b254455;display:none}
+.drawer{width:min(84vw,330px);height:100%;overflow:auto;background:#fff6fb;padding:13px;box-shadow:8px 0 30px #6c426622}
+.drawertop{background:var(--pink);color:#5b3350;padding:17px;border-radius:19px 19px 11px 11px;font:700 20px Georgia;margin-bottom:10px}.drawertop small{display:block;font:12px system-ui;margin-top:4px}
+.draweritem{width:100%;display:flex;align-items:center;gap:11px;padding:11px;border-radius:16px;background:white;border:1px solid var(--line);margin:8px 0;text-align:left;font-weight:700}.draweritem.active{outline:2px solid #e98ab9;color:#a64a7d}
+.modalshade{position:fixed;inset:0;z-index:50;background:#30223866;display:none;align-items:flex-end;justify-content:center}
+.modal{width:min(100%,520px);background:#fffafc;border-radius:24px 24px 0 0;padding:20px;max-height:88vh;overflow:auto}.modal h3{margin:0 0 12px}
+.smallmuted{font-size:12px;color:var(--muted)}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:96px;background:#3b2a44;color:#fff;padding:9px 15px;border-radius:99px;font-size:13px;z-index:60;display:none;max-width:90%}
+.bare .header,.bare .bottom{display:none}.bare .main{padding-top:40px}
+@media(min-width:700px){.main{padding:24px}.grid{grid-template-columns:repeat(3,1fr)}}
+</style></head><body>
+<div class="app"><header class="header"><button class="menuBtn" onclick="drawerOpen()">☰</button><div class="brand">Customstuff<small>RECAP · BUSINESS ORGANIZER</small></div><div class="right"><button class="circle" onclick="go('reminders')">✨</button><button class="circle" onclick="go('settings')">⚙</button></div></header>
+<main class="main" id="main"><div class="empty">Memuat aplikasi…</div></main>
+<nav class="bottom"><button data-tab="home" onclick="go('home')"><span class="navicon">⌂</span>Beranda</button><button data-tab="folders" onclick="go('folders',{folder:null})"><span class="navicon">▱</span>Folder & PO</button><button data-tab="orders" onclick="go('orders')"><span class="navicon">▤</span>Order</button><button data-tab="reports" onclick="go('reports')"><span class="navicon">▥</span>Laporan</button><button data-tab="more" onclick="go('more')"><span class="navicon">⌁</span>Lainnya</button></nav></div>
+<div class="shade" id="shade" onclick="drawerClose(event)"><aside class="drawer" onclick="event.stopPropagation()"><div class="drawertop">Customstuff Recap<small>Business workspace</small></div><div id="drawerlist"></div></aside></div>
+<div class="modalshade" id="modalshade" onclick="modalClose(event)"><section class="modal" onclick="event.stopPropagation()"><div id="modalbody"></div></section></div>
 <div id="toast"></div>
 <script>
 window.libReady=new Promise(function(res){
@@ -65,5 +71,6 @@ window.libReady=new Promise(function(res){
 <script src="app1.js"></script>
 <script src="app2.js"></script>
 <script src="app3.js"></script>
-</body>
-</html>
+<script src="app4.js"></script>
+<script src="app5.js"></script>
+</body></html>
