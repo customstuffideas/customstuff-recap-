@@ -7,7 +7,7 @@ const ls=(k,d)=>localStorage.getItem(k)||d;
 let sb=null,session=null,F=[],hist=[],PM={};
 const S={page:'home',folder:null,po:null,order:null,tab:'customer',onlyUn:false,from:'',to:'',q:'',fp:''};
 const A={},PAGES={};
-const MENU=[['home','⌂','Beranda'],['folders','▱','Folder & PO'],['orders','▤','Data Orderan'],['addorder','＋','Tambah Order'],['expenses','◈','Biaya & Pengeluaran'],['inventory','□','Stok & Pembelian'],['calculator','∑','Kalkulator & Template'],['reports','▥','Laporan Keuangan'],['vendors','⌁','Vendor & Sample'],['reminders','✨','Reminder & To-do'],['activity','◷','Aktivitas Terakhir'],['backup','▣','Backup & Export'],['settings','⚙','Pengaturan']];
+const MENU=[['home','⌂','Beranda'],['folders','▱','Folder & PO'],['orders','▤','Data Orderan'],['addorder','＋','Tambah Order'],['expenses','◈','Biaya & Pengeluaran'],['inventory','□','Stok & Pembelian'],['calculator','∑','Kalkulator & Template'],['reports','▥','Laporan Keuangan'],['vendors','⌁','Vendor & Sample'],['reminders','✧','Reminder & To-do'],['activity','◷','Aktivitas Terakhir'],['backup','▣','Backup & Export'],['settings','⚙','Pengaturan']];
 const TAB={home:'home',folders:'folders',podetail:'folders',orders:'orders',addorder:'orders',order:'orders',reports:'reports'};
 function toast(m){const t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>t.style.display='none',3500)}
 async function q(p){const{data,error}=await p;if(error){toast(error.message);throw error}return data}
@@ -67,6 +67,7 @@ async function render(){
  document.body.classList.toggle('bare',!(sb&&session));
  if(!sb)return setup();if(!session)return login();
  document.querySelectorAll('.bottom button').forEach(b=>b.classList.toggle('active',b.dataset.tab===(TAB[S.page]||'more')));
+ drawMenu();
  const m=$('#main');m.innerHTML='<div class="empty">Memuat…</div>';
  try{await loadF();m.innerHTML=await PAGES[S.page]()}catch(e){m.innerHTML=`<div class="card empty">Gagal memuat: ${esc(e.message)}</div>`}
  if(A.after){const f=A.after;A.after=null;f()}}
@@ -77,7 +78,7 @@ PAGES.home=async()=>{
   q(sb.from('pos').select('*').order('created_at',{ascending:false}).limit(3)),q(sb.from('todos').select('*').eq('done',false).order('due_date',{ascending:true}).limit(3))]);
  const lb=+localStorage.getItem('cs_lastbackup')||0,d=lb?Math.floor((Date.now()-lb)/864e5):null;
  const owed=os.filter(o=>o.payment_status!=='lunas'),laba=sum(fin,'laba_bersih');
- return`<section class="welcome"><span class="bow"></span><h2>Hai, ${esc(ls('cs_name','Customstuff'))}!</h2><p>Pelan-pelan, bisnis juga bisa rapi hari ini.</p><div class="smallmuted" style="margin-top:9px">Dashboard ringkas kamu</div></section>
+ return`<section class="welcome"><span class="bow">♡</span><i class="orn o1">✧</i><i class="orn o2">✧</i><i class="orn o3">✧</i><i class="orn o4">✧</i><h2>Hai, ${esc(ls('cs_name','Customstuff'))}!</h2><p>Semangat kerja dan rekap-annya!!</p></section>
  ${d===null||d>=7?`<div class="card" style="background:var(--yellow)">⚠️ ${d===null?'Belum pernah backup.':'Terakhir backup '+d+' hari lalu.'} <a href="#" onclick="go('backup');return false">Backup sekarang</a></div>`:''}
  <div class="sect"><h3>Quick Add</h3><button class="btn light sm" onclick="go('settings')">Atur shortcut</button></div>
  <div class="quick"><button onclick="go('addorder')"><span class="icon">▤</span>Order</button><button onclick="A.expForm()"><span class="icon">◈</span>Pengeluaran</button><button onclick="A.poForm()"><span class="icon">□</span>PO Baru</button></div>
@@ -88,5 +89,5 @@ PAGES.home=async()=>{
  <div class="stat peach" onclick="go('expenses',{onlyUn:true})"><div class="label">Belum dialokasikan</div><strong>${rp(sum(un,'total'))}</strong><div class="desc">${un.length} pengeluaran</div></div></div>
  <div class="sect"><h3>PO & folder terbaru</h3><button class="btn soft sm" onclick="go('folders',{folder:null})">Lihat semua</button></div>
  ${pos.map(p=>`<div class="row" onclick="A.openPO('${p.id}')"><span class="iconbox">▱</span><div><b>${esc(p.name)}</b><div class="desc">${esc(fpath(p.folder_id)||'Tanpa folder')} · ${stChip(p)}</div></div><span class="tail">›</span></div>`).join('')||'<div class="card empty">Belum ada PO. Mulai dari tombol PO Baru.</div>'}
- <div class="sect"><h3>Reminder ✨</h3><button class="btn soft sm" onclick="go('reminders')">Kelola</button></div>
- ${td.map(t=>`<div class="row" onclick="go('reminders')"><span class="iconbox">✨</span><div><b>${esc(t.title)}</b><div class="desc">${t.due_date||'Tanpa tanggal'}</div></div></div>`).join('')||'<div class="card"><div class="row"><span class="iconbox">✨</span><div><b>Belum ada deadline</b><div class="desc">Tambah pengingat PO, packing, atau drop-off.</div></div></div></div>'}`};
+ <div class="sect"><h3>Reminder ✧</h3><button class="btn soft sm" onclick="go('reminders')">Kelola</button></div>
+ ${td.map(t=>`<div class="row" onclick="go('reminders')"><span class="iconbox">✧</span><div><b>${esc(t.title)}</b><div class="desc">${t.due_date||'Tanpa tanggal'}</div></div></div>`).join('')||'<div class="card"><div class="row"><span class="iconbox">✧</span><div><b>Belum ada deadline</b><div class="desc">Tambah pengingat PO, packing, atau drop-off.</div></div></div></div>'}`};
