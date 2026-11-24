@@ -1,0 +1,67 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Preview Customstuff Recap</title><style>
+:root{--pink:#f3afd2;--pinkdeep:#d7679e;--pinksoft:#fff0f7;--blue:#e1f1fc;--green:#e5f4e1;--yellow:#fff4cf;--lav:#eee5fa;--peach:#ffeadc;--ink:#d4578f;--muted:#6f98d6;--line:#eadce8;--bg:#fffbfd;--ol:#ec7aa8;--chip:#ffd3e6}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,sans-serif}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:var(--bg) url(IMG_20261119_142508_228.jpg) center top/cover no-repeat}
+button,input,select,textarea{font:inherit}button{cursor:pointer;border:0;color:inherit}
+.app{min-height:100vh;padding-bottom:88px}
+.header{position:sticky;top:0;z-index:10;background:#fffdfde8;backdrop-filter:blur(10px);padding:14px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line)}
+.menuBtn{width:44px;height:44px;border-radius:15px;background:var(--pinksoft);color:var(--pinkdeep);font-size:22px}
+.brand{font:700 22px Georgia,serif;color:var(--pinkdeep);line-height:1.05}.brand small{display:block;font:600 11px system-ui;color:#7ea2dc;letter-spacing:1.3px;margin-top:4px}
+.right{margin-left:auto;display:flex;gap:8px}.circle{width:40px;height:40px;background:white;border:1px solid var(--line);border-radius:14px;color:#b96897;font-size:18px}
+.main{max-width:760px;margin:auto;padding:16px}
+.welcome{background:#fff;border:3px solid #f27aa6;border-radius:28px;padding:20px 18px 22px;position:relative;margin-bottom:16px;overflow:hidden}.welcome h2{font:700 26px Georgia,serif;color:#f26a9e;margin:0 0 6px;text-shadow:2px 2px 0 #ffd6e6,-1px -1px 0 #ffd6e6}.welcome p{margin:0;color:#6f98d6;font-weight:600}
+.orn{position:absolute;font-style:normal;line-height:1;pointer-events:none;opacity:.85}.o1{top:10px;right:62px;font-size:16px;color:#f7a1c4}.o2{bottom:12px;right:24px;font-size:22px;color:#b9a8ee}.o3{bottom:10px;left:56%;font-size:15px;color:#8fd5b5}.o4{top:14px;left:58%;font-size:14px;color:#f3c96b}
+.bow{position:absolute;right:18px;top:18px;width:30px;height:22px}.bow:before,.bow:after{content:'';position:absolute;width:13px;height:9px;border:2px solid #df7aab;border-radius:9px 9px 2px 9px}.bow:before{left:0;transform:rotate(20deg)}.bow:after{right:0;transform:rotate(-20deg)}
+.sect{display:flex;align-items:center;justify-content:space-between;margin:18px 0 10px}.sect h3{margin:0;font-size:17px}
+.btn{background:var(--pinkdeep);color:#fff;padding:11px 14px;border-radius:14px;font-weight:700;box-shadow:0 3px 0 #c75b90}.btn.light{background:white;color:#a64a7d;border:1px solid #efc9df;box-shadow:none}.btn.soft{background:var(--chip);color:#fff;box-shadow:none;text-shadow:-1.5px -1.5px 0 var(--ol),1.5px -1.5px 0 var(--ol),-1.5px 1.5px 0 var(--ol),1.5px 1.5px 0 var(--ol),0 2px 0 var(--ol)}.btn.sm{font-size:13px;padding:8px 11px}
+.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.quick button{background:var(--chip);border:1px solid #f4a9c9;border-radius:16px;padding:12px 8px;color:#fff;font-weight:800;text-shadow:-1.5px -1.5px 0 var(--ol),1.5px -1.5px 0 var(--ol),-1.5px 1.5px 0 var(--ol),1.5px 1.5px 0 var(--ol),0 2px 0 var(--ol)}.quick .icon{display:block;font-size:21px;color:#fff;margin-bottom:5px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.stat{padding:15px;border:1px solid var(--line);border-radius:20px;background:white;min-height:96px;box-shadow:0 2px 6px #f0e8ef}.stat .label{font-size:13px;color:#6f98d6}.stat strong{display:block;font-size:20px;margin-top:8px;color:#fff;text-shadow:-1.5px -1.5px 0 var(--ol),1.5px -1.5px 0 var(--ol),-1.5px 1.5px 0 var(--ol),1.5px 1.5px 0 var(--ol),0 2px 0 var(--ol)}.stat .mark{float:right;color:#c66a9d;font-size:20px}
+.pink{background:#fde7f3}.blue{background:#e2f2fc}.green{background:#e5f4e2}.yellow{background:#fff4d2}.lav{background:#eee5fa}.peach{background:#ffeadc}
+.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:15px;margin:10px 0}
+.row{display:flex;align-items:center;gap:11px;padding:12px;border:1px solid var(--line);border-radius:16px;background:#fff;margin:8px 0;cursor:pointer}
+.iconbox{width:38px;height:38px;display:grid;place-items:center;background:var(--chip);border:1px solid #f4a9c9;border-radius:12px;color:#fff;font-weight:700;font-size:19px;flex-shrink:0;text-shadow:-1.5px -1.5px 0 var(--ol),1.5px -1.5px 0 var(--ol),-1.5px 1.5px 0 var(--ol),1.5px 1.5px 0 var(--ol),0 2px 0 var(--ol)}
+.desc{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.5}.tail{margin-left:auto;color:var(--muted);text-align:right}
+.status{display:inline-block;border-radius:30px;padding:5px 10px;font-size:12px;font-weight:700;background:var(--chip);color:#fff;text-shadow:-1.5px -1.5px 0 var(--ol),1.5px -1.5px 0 var(--ol),-1.5px 1.5px 0 var(--ol),1.5px 1.5px 0 var(--ol),0 2px 0 var(--ol)}.status.produksi,.status.dp{text-shadow:none;background:var(--yellow);color:#c7508a}.status.packing{text-shadow:none;background:var(--blue);color:#4f86c6}.status.pengiriman{text-shadow:none;background:var(--lav);color:#7a6bc9}.status.selesai,.status.lunas{text-shadow:none;background:var(--green);color:#c7508a}
+.folder{border:1px solid var(--line);border-radius:17px;padding:13px;background:white;display:flex;align-items:center;gap:10px;margin:8px 0}.folder .foldermark{color:#bf6394;font-size:20px}.folder button{margin-left:auto}
+.pagehead{display:flex;align-items:center;gap:9px;margin:3px 0 15px}.pagehead h2{font-size:23px;margin:0}.back{background:var(--pinksoft);color:#a64a7d;border-radius:12px;padding:9px}
+.field{margin:12px 0}.field label{display:block;font-size:13px;color:#6f98d6;margin-bottom:5px}.field input,.field select,.field textarea{width:100%;border:1px solid #ead8e8;background:white;border-radius:13px;padding:12px;color:var(--ink)}.field textarea{min-height:75px}
+.actions{display:flex;gap:8px;margin-top:14px}.actions button{flex:1}
+.pill{background:var(--pinksoft);color:#a64a7d;border-radius:50px;padding:6px 10px;font-size:12px;border:0}.pill.on{background:var(--pinkdeep);color:#fff}
+.tabs{display:flex;gap:6px;overflow-x:auto;margin:14px 0}.tabs button{flex:none;padding:8px 14px;font-size:13px}
+.empty{text-align:center;padding:24px;color:var(--muted)}.err{color:#c0392b}
+.bottom{position:fixed;bottom:0;left:0;right:0;z-index:20;background:#fffdfd;border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:8px 3px calc(8px + env(safe-area-inset-bottom))}
+.bottom button{flex:1;background:none;color:#6f98d6;font-size:11px;padding:5px}.bottom .navicon{display:block;font-size:20px;margin-bottom:3px;color:#bc6295}.bottom button.active{color:#b8407f;font-weight:800}
+.shade{position:fixed;inset:0;z-index:40;background:#3b254455;display:none}
+.drawer{width:min(84vw,330px);height:100%;overflow:auto;background:#fff6fb;padding:13px;box-shadow:8px 0 30px #6c426622}
+.drawertop{background:var(--pink);color:#b83f78;padding:17px;border-radius:19px 19px 11px 11px;font:700 20px Georgia;margin-bottom:10px}.drawertop small{display:block;font:12px system-ui;margin-top:4px}
+.draweritem{width:100%;display:flex;align-items:center;gap:11px;padding:11px;border-radius:16px;background:white;border:1px solid var(--line);margin:8px 0;text-align:left;font-weight:700}.draweritem.active{outline:2px solid #e98ab9;color:#a64a7d}
+.modalshade{position:fixed;inset:0;z-index:50;background:#30223866;display:none;align-items:flex-end;justify-content:center}
+.modal{width:min(100%,520px);background:#fffafc;border-radius:24px 24px 0 0;padding:20px;max-height:88vh;overflow:auto}.modal h3{margin:0 0 12px}
+.smallmuted{font-size:12px;color:var(--muted)}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:96px;background:#3b2a44;color:#fff;padding:9px 15px;border-radius:99px;font-size:13px;z-index:60;display:none;max-width:90%}
+.bare .header,.bare .bottom{display:none}.bare .main{padding-top:40px}
+@media(min-width:700px){.main{padding:24px}.grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:820px){
+.app{margin-left:272px;padding-bottom:24px}
+.bottom,.menuBtn{display:none}
+.shade{display:block!important;position:fixed;inset:0 auto 0 0;width:272px;background:transparent;z-index:30}
+.drawer{width:100%;box-shadow:none;border-right:1px solid var(--line)}
+.main{max-width:900px;padding:26px 28px}
+.modalshade{align-items:center}.modal{border-radius:24px;max-height:90vh}
+#toast{bottom:28px}
+.bare .app{margin-left:0}.bare .shade{display:none!important}}
+</style></head><body><div class="app">
+<header class="header"><button class="menuBtn">☰</button><div class="brand">Customstuff<small>RECAP · BUSINESS ORGANIZER</small></div><div class="right"><button class="circle">✧</button><button class="circle">⚙</button></div></header>
+<main class="main"><section class="welcome"><span class="bow"></span><i class="orn o1">✧</i><i class="orn o2">✧</i><i class="orn o3">✧</i><i class="orn o4">✧</i><h2>Hai, Customstuff!</h2><p>Semangat kerja dan rekap-annya!!</p></section>
+<div class="sect"><h3>Quick Add</h3><button class="btn light sm">Atur shortcut</button></div>
+<div class="quick"><button><span class="icon">▤</span>Order</button><button><span class="icon">◈</span>Pengeluaran</button><button><span class="icon">□</span>PO Baru</button></div>
+<div class="sect"><h3>Ringkasan bisnis</h3></div>
+<div class="grid"><div class="stat pink"><span class="mark">▤</span><div class="label">Order tercatat</div><strong>12</strong></div><div class="stat blue"><span class="mark">◈</span><div class="label">Total omzet</div><strong>Rp660.000</strong></div><div class="stat yellow"><span class="mark">□</span><div class="label">Total biaya</div><strong>Rp210.000</strong></div><div class="stat green"><span class="mark">↗</span><div class="label">Laba sementara</div><strong>Rp450.000</strong></div></div>
+<div class="sect"><h3>PO &amp; folder terbaru</h3><button class="btn soft sm">Lihat semua</button></div>
+<div class="row"><span class="iconbox">▱</span><div><b>BTS Arirang Photocard Holder</b><div class="desc">BTS · <span class="status produksi">Produksi</span></div></div><span class="tail">›</span></div><div class="row"><span class="iconbox">▱</span><div><b>Keychain Batch 2</b><div class="desc">Tanpa folder · <span class="status">Open PO</span></div></div><span class="tail">›</span></div>
+<div class="sect"><h3>Reminder ✧</h3><button class="btn soft sm">Kelola</button></div>
+<div class="row"><span class="iconbox">✧</span><div><b>Cetak resi batch Arirang</b><div class="desc">25 Nov 2026</div></div><span class="tail">›</span></div><div class="row"><span class="iconbox">✧</span><div><b>Bayar vendor akrilik</b><div class="desc">28 Nov 2026</div></div><span class="tail">›</span></div>
+</main>
+<nav class="bottom"><button class="active"><span class="navicon">⌂</span>Beranda</button><button><span class="navicon">▱</span>Folder &amp; PO</button><button><span class="navicon">▤</span>Order</button><button><span class="navicon">▥</span>Laporan</button><button><span class="navicon">⌁</span>Lainnya</button></nav></div>
+<div class="shade"><aside class="drawer"><div class="drawertop">Customstuff Recap<small>Business workspace</small></div><button class="draweritem active"><span class="iconbox">⌂</span>Beranda</button><button class="draweritem"><span class="iconbox">▱</span>Folder &amp; PO</button><button class="draweritem"><span class="iconbox">▤</span>Data Orderan</button><button class="draweritem"><span class="iconbox">＋</span>Tambah Order</button><button class="draweritem"><span class="iconbox">◈</span>Biaya &amp; Pengeluaran</button><button class="draweritem"><span class="iconbox">□</span>Stok &amp; Pembelian</button><button class="draweritem"><span class="iconbox">∑</span>Kalkulator &amp; Template</button><button class="draweritem"><span class="iconbox">▥</span>Laporan Keuangan</button><button class="draweritem"><span class="iconbox">⌁</span>Vendor &amp; Sample</button><button class="draweritem"><span class="iconbox">✧</span>Reminder &amp; To-do</button><button class="draweritem"><span class="iconbox">◷</span>Aktivitas Terakhir</button><button class="draweritem"><span class="iconbox">▣</span>Backup &amp; Export</button><button class="draweritem"><span class="iconbox">⚙</span>Pengaturan</button></aside></div></body></html>
