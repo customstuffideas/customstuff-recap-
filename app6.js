@@ -27,13 +27,3 @@ A.cSave=asNew=>{const rows=CL.rows.filter(r=>r.n.trim());if(!rows.length)return 
   let id;if(up){id=CL.tpl.id;await upd('templates',id,{name:v.name,kind:v.kind});await q(sb.from('template_items').delete().eq('template_id',id))}else{id=(await ins('templates',{name:v.name,kind:v.kind})).id}
   await q(sb.from('template_items').insert(rows.map((r,i)=>({template_id:id,item_name:r.n.trim(),qty:r.q>0?r.q:1,unit_price:r.p||0,sort_order:i}))));
   CL.tpl={id,name:v.name,kind:v.kind};log(up?'ubah':'buat','template',id,v.name);toast('Template tersimpan')})};
-A.cDelTpl=async()=>{if(!CL.tpl||!confirm('Hapus template ini? Biaya PO yang sudah memakainya tidak berubah.'))return;await del('templates',CL.tpl.id);log('hapus','template',CL.tpl.id,CL.tpl.name);CL.tpl=null;CL.rows=[blank()];render()};
-A.cUse=async()=>{const rows=CL.rows.filter(r=>r.n.trim()&&r.q>0);if(!rows.length)return toast('Isi minimal satu barang dengan qty lebih dari 0.');
- const pos=await q(sb.from('pos').select('id,name').order('created_at',{ascending:false}));if(!pos.length)return toast('Buat batch PO dulu.');
- const k=CL.tpl?CL.tpl.kind:'nota';
- sheet('Pakai ke batch PO',[{k:'po',l:'Batch PO',t:'select',o:pos.map(p=>[p.id,p.name]),v:pos.find(p=>p.id===S.po)?S.po:pos[0].id},{k:'ct',l:'Masuk ke biaya',t:'select',o:[['packing','Packing'],['freebies','Freebies'],['produksi','Produksi'],['lain','Biaya lain']],v:k==='packing'?'packing':k==='freebies'?'freebies':'lain'},{k:'mul',l:'Jumlah paket (qty dikali ini)',t:'number',v:1,req:1}],
-  async v=>{const m=v.mul>0?v.mul:1,lab=CL.tpl?CL.tpl.name:'Kalkulator nota';
-   await q(sb.from('po_cost_lines').insert(rows.map(r=>({po_id:v.po,cost_type:v.ct,item_name:r.n.trim(),qty:r.q*m,unit_price:r.p,source_template_id:CL.tpl?CL.tpl.id:null,source_label:lab+(m>1?' ×'+m:'')}))));
-   log('buat','biaya PO',v.po,lab+': '+rows.length+' item');toast('Disalin ke biaya batch (harga disimpan sebagai snapshot)')},null,'Pakai')};
-A.margin=()=>{const g=i=>+$('#m'+i).value||0,j=g(1),c=g(2)+g(3)+g(4)+g(5),l=j-c,t=g(6),mg=g(7);
- $('#mres').innerHTML=`Total modal per pcs: <b>${rp(c)}</b><br>Laba bersih
