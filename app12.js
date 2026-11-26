@@ -1,8 +1,11 @@
 /* ---------- Tahap E (1/2): Quick Add yang bisa diatur ---------- */
 let QA=[],qaBusy=null;
-const QADEF=[{label:'Order',icon:'▤',color:'#f9a9ca',category:'Order',action_type:'order',action_params:{}},{label:'Pengeluaran',icon:'◈',color:'#f9a9ca',category:'Keuangan',action_type:'expense',action_params:{}},{label:'PO Baru',icon:'□',color:'#f9a9ca',category:'Order',action_type:'po',action_params:{}},{label:'Restock',icon:'＋',color:'#8fd5b5',category:'Stok',action_type:'restock',action_params:{}},{label:'Reminder',icon:'✧',color:'#b9a8ee',category:'Lainnya',action_type:'todo',action_params:{}}];
+const QADEF=[{label:'Order',icon:'▤',color:'#f9a9ca',category:'Order',action_type:'order',action_params:{}},{label:'Pengeluaran',icon:'◈',color:'#f9a9ca',category:'Keuangan',action_type:'expense',action_params:{}},{label:'PO Baru',icon:'□',color:'#f9a9ca',category:'Order',action_type:'po',action_params:{}},{label:'Restock',icon:'＋',color:'#f9a9ca',category:'Stok',action_type:'restock',action_params:{}},{label:'Reminder',icon:'✧',color:'#f9a9ca',category:'Lainnya',action_type:'todo',action_params:{}}];
 const QAQ=()=>q(sb.from('quick_actions').select('*').order('sort_order').order('created_at'));
+document.head.insertAdjacentHTML('beforeend','<style>.lav{background:#ffeadc}</style>');
+let qaFix=false;
 async function qaLoad(){let r=await QAQ();
+ if(!qaFix){qaFix=true;const f=await q(sb.from('settings').select('key').eq('key','qa_color_fix'));if(!f.length){const o=r.filter(x=>(x.label==='Restock'&&x.color==='#8fd5b5')||(x.label==='Reminder'&&x.color==='#b9a8ee'));await Promise.all(o.map(x=>upd('quick_actions',x.id,{color:'#f9a9ca'})));await sb.from('settings').insert({key:'qa_color_fix',value:{v:1}});if(o.length)r=await QAQ()}}
  if(!r.length){qaBusy=qaBusy||(async()=>{const f=await q(sb.from('settings').select('key').eq('key','quick_seeded'));if(!f.length){await q(sb.from('quick_actions').insert(QADEF.map((d,i)=>({...d,sort_order:i}))));await sb.from('settings').insert({key:'quick_seeded',value:{v:1}})}})();try{await qaBusy}finally{qaBusy=null}r=await QAQ()}
  QA=r;return r}
 const PGS=[['home','Beranda'],['folders','Folder & PO'],['orders','Data Orderan'],['addorder','Tambah Order'],['expenses','Biaya & Pengeluaran'],['inventory','Stok & Pembelian'],['calculator','Kalkulator & Template'],['reports','Laporan Keuangan'],['vendors','Vendor & Sample'],['reminders','Reminder & To-do'],['activity','Aktivitas Terakhir'],['backup','Backup & Export'],['settings','Pengaturan']];
