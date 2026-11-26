@@ -1,0 +1,10 @@
+/* ---------- Tahap G (1/2): tombol form pink, ekspor Excel/PDF, akses laporan periode ---------- */
+document.head.insertAdjacentHTML('beforeend','<style>.modal .actions .btn{background:var(--chip)!important;color:#fff;box-shadow:none!important;text-shadow:var(--ts)}@media print{.header,.bottom,.shade,.modalshade,#toast,.back,.btn,.tabs,.actions{display:none!important}.app{margin:0!important;padding:0!important}body::before{display:none}.main{max-width:none;padding:0}}</style>');
+TAB.periode='reports';
+const XLU='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+const loadScript=u=>new Promise((ok,no)=>{if(window.XLSX)return ok();const s=document.createElement('script');s.src=u;s.onload=ok;s.onerror=()=>no(new Error('Gagal memuat pustaka Excel. Cek koneksi internet lalu coba lagi.'));document.head.appendChild(s)});
+const xlsSave=async(name,sheet,rows)=>{try{await loadScript(XLU);const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(rows),sheet);XLSX.writeFile(wb,name)}catch(e){toast(e.message)}};
+A.xlsRep=()=>xlsSave('laporan-po-customstuff.xlsx','Laporan PO',[['PO','Tanggal','Order','Qty','Omzet','Modal produksi','Packing','Freebies','Biaya lain','Total biaya','Laba'],...(S.rows||[]).map(x=>[x.name,x.po_date,+x.order_count,+x.qty_sold,+x.omzet,+x.modal_produksi,+x.biaya_packing,+x.biaya_freebies,+x.biaya_lain,+x.total_biaya,+x.laba_bersih])]);
+const _rep2=PAGES.reports;
+PAGES.reports=async()=>{const h=await _rep2();
+ return h.replace('<button class="btn light sm" style="margin-top:10px" onclick="A.csv()">⬇ Ekspor CSV</button>',()=>'<div class="actions" style="margin:10px 0 0;flex-wrap:wrap"><button class="btn light sm" onclick="A.csv()">⬇ CSV</button><button class="btn light sm" onclick="A.xlsRep()">⬇ Excel</button><button class="btn light sm" onclick="window.print()">Cetak / PDF</button><button class="btn light sm" onclick="go(\'periode\')">Harian & bulanan</button></div><p class="smallmuted">Untuk PDF, pilih Simpan sebagai PDF di jendela cetak.</p>')};
