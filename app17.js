@@ -1,0 +1,24 @@
+/* ---------- Tahap G (1/2): laporan harian & bulanan dengan grafik ---------- */
+const RP={mode:'bulan',from:'',to:'',rows:[]};
+const iso=d=>new Date(d.getTime()-d.getTimezoneOffset()*6e4).toISOString().slice(0,10);
+const rpDef=()=>{const n=new Date();if(RP.mode==='hari'){const a=new Date(n);a.setDate(a.getDate()-13);return[iso(a),iso(n)]}return[iso(new Date(n.getFullYear(),n.getMonth()-5,1)),iso(n)]};
+const chartSvg=rows=>{const W=320,H=140,P=10,n=rows.length,g=(W-2*P)/n,bw=Math.max(2,g/2.6),mx=Math.max(1,...rows.map(r=>Math.max(r.omzet,r.biaya)));
+ return`<svg viewBox="0 0 ${W} ${H+18}" width="100%" role="img" aria-label="Grafik omzet dan biaya">`+rows.map((r,i)=>{const x=P+i*g,a=r.omzet/mx*(H-8),b=r.biaya/mx*(H-8);
+  return`<rect x="${x}" y="${H-a}" width="${bw}" height="${a}" rx="2" fill="#f27aa6"/><rect x="${x+bw+1}" y="${H-b}" width="${bw}" height="${b}" rx="2" fill="#8fbdf0"/>`+((n<=12||i%Math.ceil(n/8)===0)?`<text x="${x}" y="${H+12}" font-size="7" fill="#6f98d6">${esc(RP.mode==='bulan'?r.k.slice(2):r.k.slice(5))}</text>`:'')}).join('')+`</svg><div class="desc"><span style="color:#f27aa6">■</span> Omzet &nbsp; <span style="color:#8fbdf0">■</span> Biaya</div>`};
+PAGES.periode=async()=>{
+ const[d0,d1]=rpDef(),from=RP.from||d0,to=RP.to||d1,k=d=>RP.mode==='bulan'?d.slice(0,7):d,keys=[];
+ const c=new Date(from+'T00:00:00'),end=new Date(to+'T00:00:00');let gd=0;while(c<=end&&gd++<400){const x=k(iso(c));if(!keys.includes(x))keys.push(x);c.setDate(c.getDate()+1)}
+ const ords=await q(sb.from('orders').select('id,order_date').gte('order_date',from).lte('order_date',to)),od=Object.fromEntries(ords.map(o=>[o.id,o.order_date]));
+ let it=[];for(let i=0;i<ords.length;i+=150)it=it.concat(await q(sb.from('order_items').select('order_id,qty,sell_price').in('order_id',ords.slice(i,i+150).map(o=>o.id))));
+ const[pay,ex,us,cl]=await Promise.all([q(sb.from('payments').select('amount,paid_at').eq('kind','buyer').gte('paid_at',from).lte('paid_at',to)),q(sb.from('expenses').select('total,spent_at').eq('is_stock_purchase',false).gte('spent_at',from).lte('spent_at',to)),
+  q(sb.from('stock_movements').select('total_cost,moved_at').eq('kind','pakai').gte('moved_at',from).lte('moved_at',to)),q(sb.from('po_cost_lines').select('subtotal,created_at').gte('created_at',from+'T00:00:00').lte('created_at',to+'T23:59:59'))]);
+ const M=Object.fromEntries(keys.map(x=>[x,{k:x,omzet:0,masuk:0,biaya:0}])),add=(d,f,v)=>{const m=M[k(String(d).slice(0,10))];if(m)m[f]+=+v};
+ it.forEach(i=>add(od[i.order_id],'omzet',i.qty*i.sell_price));pay.forEach(p=>add(p.paid_at,'masuk',p.amount));ex.forEach(e=>add(e.spent_at,'biaya',e.total));us.forEach(u=>add(u.moved_at,'biaya',u.total_cost));cl.forEach(x=>add(x.created_at,'biaya',x.subtotal));
+ const rows=keys.map(x=>M[x]);RP.rows=rows;const T=f=>rows.reduce((a,r)=>a+r[f],0);
+ return head('Laporan Harian & Bulanan','Omzet, uang masuk, dan biaya per periode.')+`<div class="grid"><div class="field"><label>Per</label><select onchange="RP.mode=this.value;RP.from='';RP.to='';render()"><option value="hari"${RP.mode==='hari'?' selected':''}>Hari</option><option value="bulan"${RP.mode==='bulan'?' selected':''}>Bulan</option></select></div><div></div><div class="field"><label>Dari</label><input type="date" value="${from}" onchange="RP.from=this.value;render()"></div><div class="field"><label>Sampai</label><input type="date" value="${to}" onchange="RP.to=this.value;render()"></div></div>
+ <div class="grid"><div class="stat pink"><div class="label">Omzet</div><strong>${rp(T('omzet'))}</strong></div><div class="stat green"><div class="label">Uang masuk</div><strong>${rp(T('masuk'))}</strong></div><div class="stat blue"><div class="label">Biaya</div><strong>${rp(T('biaya'))}</strong></div><div class="stat yellow"><div class="label">Omzet dikurangi biaya</div><strong>${rp(T('omzet')-T('biaya'))}</strong></div></div>
+ <div class="card"><h3>Grafik</h3>${rows.length?chartSvg(rows):'<p class="smallmuted">Tidak ada periode.</p>'}</div>
+ <div class="actions" style="flex-wrap:wrap"><button class="btn light sm" onclick="A.rpXls()">⬇ Excel</button><button class="btn light sm" onclick="window.print()">Cetak / PDF</button></div>
+ <div class="card"><h3>Rincian</h3>${rows.map(r=>`<div class="row" style="cursor:default"><div><b>${r.k}</b><div class="desc">masuk ${rp(r.masuk)} · biaya ${rp(r.biaya)}</div></div><strong class="tail">${rp(r.omzet)}</strong></div>`).join('')}</div>
+ <p class="smallmuted">Omzet dihitung dari tanggal order. Biaya = pengeluaran yang dicatat (tanpa pembelian stok), stok yang dipakai, dan biaya dari template. Modal estimasi produk tidak dihitung di sini, jadi angkanya bisa berbeda dari laba per PO.</p>`};
+A.rpXls=()=>xlsSave('laporan-'+RP.mode+'-customstuff.xlsx','Laporan',[['Periode','Omzet','Uang masuk','Biaya','Omzet dikurangi biaya'],...RP.rows.map(r=>[r.k,r.omzet,r.masuk,r.biaya,r.omzet-r.biaya])]);
