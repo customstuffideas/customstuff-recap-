@@ -1,0 +1,17 @@
+/* ---------- Tahap H (1/5): arsip PO dan progres PO di daftar batch ---------- */
+const PGW=s=>s==='selesai'?1:s==='berjalan'?.5:0,PGM=s=>s==='selesai'?'●':s==='berjalan'?'◐':'○';
+const PGPCT=p=>Math.round((PGW(p.status_production)+PGW(p.status_packing)+PGW(p.status_shipping))/3*100);
+const progBar=p=>`<div style="height:6px;border-radius:6px;background:#ffe3ee;margin-top:8px"><div style="height:100%;width:${PGPCT(p)}%;border-radius:6px;background:var(--chip)"></div></div><div class="desc">Produksi ${PGM(p.status_production)} · Packing ${PGM(p.status_packing)} · Pengiriman ${PGM(p.status_shipping)} · ${PGPCT(p)}%</div>`;
+let SHOWARC=false;
+A.poArc=async(id,v)=>{try{await upd('pos',id,{archived:v});log(v?'arsip':'pulihkan','po',id,v?'Batch diarsipkan':'Batch dipulihkan');toast(v?'Batch diarsipkan':'Batch dipulihkan');if(v&&S.page==='podetail')S.page='folders';render()}catch(e){}};
+PAGES.folders=async()=>{
+ const[pos,ords]=await Promise.all([q(sb.from('pos').select('*').order('created_at',{ascending:false})),q(sb.from('orders').select('id,po_id'))]);
+ const cur=S.folder,par=cur?F.find(f=>f.id===cur):null,subs=F.filter(f=>(f.parent_id||null)===cur),here=pos.filter(p=>(p.folder_id||null)===cur),list=here.filter(p=>!p.archived),arc=here.filter(p=>p.archived),na=pos.filter(p=>p.archived).length;
+ let h=head('Folder & PO','Folder bebas, batch PO, dan customer tersimpan di dalam batch yang dipilih.')+`<div class="quick"><button onclick="A.folderForm()">＋ Folder</button><button onclick="A.poForm()">＋ PO baru</button></div>`;
+ if(par)h+=`<div class="card"><button class="btn light sm" onclick="go('folders',{folder:${par.parent_id?`'${par.parent_id}'`:'null'}})">← Folder induk</button> <button class="btn soft sm" onclick="A.folderForm('${par.id}')">✎ Ubah / pindah / hapus</button><h3 style="margin-top:12px">${esc(par.name)}</h3><div class="desc">${esc(fpath(cur))}<br>Folder ini berisi subfolder dan PO batch.</div></div>`;
+ if(subs.length)h+=`<div class="sect"><h3>Subfolder</h3></div>`+subs.map(f=>`<div class="folder"><span class="foldermark">▱</span><div><b>${esc(f.name)}</b><div class="desc">${F.filter(x=>x.parent_id===f.id).length} subfolder · ${pos.filter(p=>p.folder_id===f.id&&!p.archived).length} batch PO</div></div><button class="btn soft sm" onclick="go('folders',{folder:'${f.id}'})">Buka</button></div>`).join('');
+ if(list.length)h+=`<div class="sect"><h3>Batch PO di folder ini</h3></div>`+list.map(p=>`<div class="card"><b>${esc(p.name)}</b><div class="desc">${ords.filter(o=>o.po_id===p.id).length} customer · ${p.po_date}</div><p>${stChip(p)}</p>${progBar(p)}<button class="btn soft sm" style="margin-top:8px" onclick="A.openPO('${p.id}')">Buka batch</button></div>`).join('');
+ if(!subs.length&&!list.length&&!(SHOWARC&&arc.length))h+=`<div class="card empty">Folder ini belum punya subfolder atau batch PO aktif. Tambahkan lewat tombol di atas.</div>`;
+ if(na)h+=`<div class="actions"><button class="btn light sm" onclick="SHOWARC=!SHOWARC;render()">${SHOWARC?'Sembunyikan arsip':'Tampilkan arsip ('+na+')'}</button></div>`;
+ if(SHOWARC&&arc.length)h+=`<div class="sect"><h3>Arsip di folder ini</h3></div>`+arc.map(p=>`<div class="card" style="opacity:.75"><b>${esc(p.name)}</b> <span class="status">Arsip</span><div class="desc">${p.po_date}</div><div class="actions"><button class="btn soft sm" onclick="A.openPO('${p.id}')">Buka</button><button class="btn soft sm" onclick="A.poArc('${p.id}',false)">Pulihkan</button></div></div>`).join('');
+ return h};
